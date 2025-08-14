@@ -161,3 +161,24 @@ ALTER TABLE ejemplo ALTER COLUMN salario SET DEFAULT 400.00;
 
 ```
 > Agregar un DEFAULT para `salario` de 400.00
+
+# Taller de Constraints
+# Definir los Constraints (Primary key, Foreign Key, Not null, Default) mediante ALTER TABLE
+```sql
+CREATE TABLE country (
+    id serial,
+    name varchar(50)
+);
+
+CREATE TABLE region (
+    id serial,
+    name varchar(50),
+    idcountry integer
+);
+
+CREATE TABLE city (
+    id serial,
+    name varchar(50),
+    idregion integer
+);
+```
