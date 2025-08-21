@@ -1,284 +1,301 @@
-# **PostgreSQL con Docker**
+<div align="center">
 
-<br>
+# 🌸✨ PostgreSQL Kawaii Guide ✨🌸
 
-# **Creación del Contenedor**
+*La guía más adorable para dominar PostgreSQL con Docker* 💕
+
+
+
+*¡Aprende PostgreSQL de la forma más kawaii posible!* (´｡• ᵕ •｡`) ♡
+
+</div>
+
+---
+
+## 🎯 ¿Qué encontrarás aquí?
+
+<table>
+<tr>
+<td align="center">🐳</td>
+<td><strong>Docker Setup</strong><br/>Configuración súper fácil con Docker</td>
+</tr>
+<tr>
+<td align="center">💎</td>
+<td><strong>SQL Kawaii</strong><br/>Ejemplos adorables de consultas SQL</td>
+</tr>
+<tr>
+<td align="center">🏗️</td>
+<td><strong>Database Design</strong><br/>Estructuras bonitas y bien organizadas</td>
+</tr>
+<tr>
+<td align="center">⚡</td>
+<td><strong>Quick Commands</strong><br/>Comandos rápidos para ser productivo</td>
+</tr>
+</table>
+
+---
+
+## 🚀 Quick Start
+
+### 1. 🐳 Crear tu contenedor PostgreSQL
 
 ```bash
-docker run -d --name=postgres_container -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -e POSTGRES_DB=campus -p 5433:5432 -v pgdata:/var/lib/postgresql/data --restart=unless-stopped postgres:15
+docker run -d \
+  --name=postgres_kawaii 🌸 \
+  -e POSTGRES_USER=admin \
+  -e POSTGRES_PASSWORD=admin \
+  -e POSTGRES_DB=campus \
+  -p 5433:5432 \
+  -v pgdata:/var/lib/postgresql/data \
+  --restart=unless-stopped \
+  postgres:15
 ```
 
-## **Conectar al Contenedor**
+### 2. 🔗 Conectarse
 
 ```bash
-docker exec -it postgres_container sh
-```
+# Entrar al contenedor
+docker exec -it postgres_kawaii sh
 
-## **Conectar con PostgreSQL bajo Consola**
-
-### ***Versión larga***
-
-```bash
-psql --host=localhost --username=admin -d campus --password
-```
-### ***Versión corta***
-
-```bash
+# Conectar con PostgreSQL
 psql -h localhost -U admin -d campus -W
 ```
 
-### ***Usuario por defecto***
-```bash
-psql ... --username=postgres ...
-```
+---
 
-<br>
+## 🎀 Comandos Esenciales
 
-# **Comandos PSQL**
-
-- `\l`: Lista las bases de datos
-- `\c {db_name}`: Cambiar a una base de datos existente
-- `\d`: Muestra las tablas 
-- `\d {table_name}`: Muestra información de creación de la tabla
-- `\dt`: Muestra las tablas de la base de datos actual
-- `\ds`: Secuencias, que se crean con el tipo de datos `serial`
-- `\di`: Listar los indices
-- `\dp \z`: Listado de privilegios de las tablas
-- `\dn`: Listar los schema de la base de datos 
-
-
-<br>
-
-# **Estructuras sql**
-
-## Type
+<details>
+<summary>🔍 <strong>Exploración de Base de Datos</strong></summary>
 
 ```sql
-CREATE TYPE sexo AS ENUM('masculino','femenino', 'otro');
-
-CREATE TABLE camper(
-    name VARCHAR(100) NOT NULL,
-    sexo_camper sexo NOT NULL
-);
+\l                    -- 📋 Listar bases de datos
+\c database_name      -- 🔄 Cambiar de base de datos
+\dt                   -- 🏠 Ver tablas
+\d table_name         -- 🔍 Describir tabla específica
 ```
-## Crear tabla `ejemplo`
+</details>
+
+<details>
+<summary>🏗️ <strong>Gestión de Estructura</strong></summary>
 
 ```sql
-CREATE TABLE ejemplo (
-    id serial PRIMARY KEY,
-    nombre varchar(100) NOT NULL,
-    descripcion text NULL,
-    precio numeric(10,2) NOT NULL,
-    en_stock boolean NOT NULL,
-    fecha_creacion date NOT NULL,
-    hora_creacion time NOT NULL,
-    fecha_hora timestamp NOT NULL,
-    fecha_hora_zona timestamp with time zone,
-    duracion interval,
-    direccion_ip inet,
-    direccion_mac macaddr,
-    punto_geometrico point,
-    datos_json json,
-    datos_jsonb jsonb,
-    identificador_unico uuid,
-    cantidad_monetario money,
-    rangos int4range,
-    colores_preferidos varchar(20)[]
+\ds                   -- 🔢 Ver secuencias
+\di                   -- 📇 Ver índices
+\dn                   -- 🏗️ Ver esquemas
+\dp                   -- 🔐 Ver privilegios
+```
+</details>
+
+---
+
+## 💎 Ejemplos Kawaii
+
+### 🦄 Tipos Personalizados
+
+```sql
+-- ✨ Creando un tipo enum adorable ✨
+CREATE TYPE estado_civil AS ENUM('soltero', 'casado', 'complicado');
+
+CREATE TABLE usuarios(
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    estado estado_civil DEFAULT 'soltero'
 );
 ```
 
-## Insert para `ejemplo`
+### 🌈 Tabla con Todos los Tipos
 
 ```sql
-INSERT INTO ejemplo(nombre, descripcion, precio, en_stock, fecha_creacion, hora_creacion, fecha_hora, fecha_hora_zona, duracion, direccion_ip, direccion_mac, punto_geometrico, datos_json, datos_jsonb, identificador_unico, cantidad_monetario, rangos, colores_preferidos)
-VALUES
-('Ejemplo A', 'Lorem ipsum......', 9990.99, true, '2025-07-10', '20:30:10', '2025-07-10 20:30:10', '2025-07-10 20:30:10-05', '1 day', '192.168.0.1', '08:00:27:00:00:00', '(10, 20)', '{"key": "value"}', '{"key": "value"}', '2137451d-d1cc-45f1-8eb1-6b958cd789d3', '100.00', '[10, 20)', ARRAY['rojo', 'verde', 'azul', 'otro']);
-```
-
-## Definición de Contraints (Restricciones)
-### Tabla de Ejemplo
-
-```sql
-CREATE TABLE empleados(
-    id serial,
-    nombre varchar(100) NOT NULL,
-    edad integer NOT NULL,
-    salario numeric(10,2) NOT NULL,
-    fecha_contrato date,
-    vigente boolean DEFAULT true
+-- 🎀 La tabla más completa del universo kawaii 🎀
+CREATE TABLE productos_kawaii (
+    id SERIAL PRIMARY KEY,                    -- 🔑 ID único
+    nombre VARCHAR(100) NOT NULL,             -- 📛 Nombre del producto
+    descripcion TEXT,                         -- 📝 Descripción detallada
+    precio NUMERIC(10,2) NOT NULL,            -- 💰 Precio exacto
+    en_stock BOOLEAN DEFAULT true,            -- ✅ ¿Disponible?
+    fecha_creacion DATE DEFAULT CURRENT_DATE, -- 📅 Cuándo se creó
+    colores VARCHAR(20)[],                    -- 🌈 Array de colores
+    datos_extra JSONB,                        -- 🚀 Datos flexibles
+    codigo UUID DEFAULT gen_random_uuid()     -- 🆔 Código único
 );
 ```
 
-```sql
-CREATE TABLE departamentos(
-    id serial,
-    nombre varchar(100) NOT NULL,
-    vigente boolean DEFAULT true,
-    PRIMARY KEY(id)
-);
-```
+### 💫 Constraints Kawaii
 
 ```sql
-ALTER TABLE empleados ADD COLUMN departamento_id integer NOT NULL;
-```
+-- 🔒 Agregando restricciones adorables 🔒
 
-## Constraints a Tablas existentes
-### Primary Key
-
-```sql
+-- Primary Key
 ALTER TABLE empleados ADD PRIMARY KEY(id);
+
+-- Foreign Key con nombre bonito
+ALTER TABLE empleados 
+ADD CONSTRAINT fk_empleado_departamento 
+FOREIGN KEY(departamento_id) 
+REFERENCES departamentos(id);
+
+-- Unique constraint
+ALTER TABLE productos 
+ADD CONSTRAINT uk_producto_nombre UNIQUE(nombre);
+
+-- Check constraint para validaciones
+ALTER TABLE empleados 
+ADD CONSTRAINT ck_edad_minima CHECK (edad >= 18);
+
+-- Default values
+ALTER TABLE empleados 
+ALTER COLUMN salario SET DEFAULT 1000.00;
 ```
 
-### Foreign Key
+---
+
+## 🎯 Consultas Kawaii Avanzadas
+
+### 🏆 Top Productos Más Vendidos
 
 ```sql
-ALTER TABLE empleados ADD CONSTRAINT empleados_departamentos_id FOREIGN KEY(departamento_id) REFERENCES departamentos(id);
+SELECT 
+    p.nombre,
+    SUM(cp.cantidad) AS unidades_vendidas,
+    SUM(cp.total) AS ingresos_totales,
+    '🌟' AS estrella
+FROM productos p
+JOIN compras_productos cp ON p.id = cp.id_producto
+GROUP BY p.id, p.nombre
+ORDER BY unidades_vendidas DESC
+LIMIT 10;
 ```
 
-### Unique
+### 📊 Estadísticas de Ventas
 
 ```sql
-ALTER TABLE ejemplo
-ADD CONSTRAINT nombre UNIQUE (nombre);
+-- 🧮 Análisis kawaii de ventas 🧮
+WITH ventas_diarias AS (
+    SELECT 
+        DATE(fecha) as dia,
+        SUM(total) as venta_dia
+    FROM compras
+    GROUP BY DATE(fecha)
+)
+SELECT 
+    '📈 Promedio' as metrica,
+    ROUND(AVG(venta_dia), 2) as valor
+FROM ventas_diarias
+UNION ALL
+SELECT 
+    '📊 Mediana' as metrica,
+    PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY venta_dia) as valor
+FROM ventas_diarias;
 ```
-> Agregar la restriccion de UNIQUE a `nombre`
 
-### Check
+### 🔍 Búsqueda Inteligente
+
 ```sql
-ALTER TABLE ejemplo ADD COLUMN edad integer;
-
-ALTER TABLE ejemplo
-ADD CONSTRAINT edad CHECK (edad >= 18);
-
+-- ☕ Buscar productos que empiecen con 'caf' ☕
+SELECT 
+    nombre,
+    precio,
+    CASE 
+        WHEN cantidad_stock > 10 THEN '✅ Bien surtido'
+        WHEN cantidad_stock > 0 THEN '⚠️ Poco stock'
+        ELSE '❌ Agotado'
+    END as estado_stock
+FROM productos
+WHERE nombre ILIKE 'caf%'
+  AND estado = 'activo'
+ORDER BY cantidad_stock DESC;
 ```
 
-> Agregar la restriccion de CHECK para validar que la `edad` del empleado sea >= 18
+---
 
+## 🛠️ Funciones Útiles
 
-### Default
+### 💝 Función para Calcular Total de Compra
 
 ```sql
-ALTER TABLE ejemplo ADD COLUMN salario decimal;
-ALTER TABLE ejemplo ALTER COLUMN salario SET DEFAULT 400.00;
+CREATE OR REPLACE FUNCTION calcular_total_compra(p_id_compra INT)
+RETURNS NUMERIC 
+LANGUAGE plpgsql AS $
+DECLARE  
+    v_total NUMERIC(16,2) := 0;
+BEGIN
+    SELECT COALESCE(SUM(total), 0)
+    INTO v_total
+    FROM compras_productos
+    WHERE id_compra = p_id_compra;
 
+    RETURN v_total;
+END;
+$;
 ```
-> Agregar un DEFAULT para `salario` de 400.00
 
-# Taller de Constraints
-# Definir los Constraints (Primary key, Foreign Key, Not null, Default) mediante ALTER TABLE
+### 🎯 Uso de la Función
+
 ```sql
-CREATE TABLE country (
-    id serial,
-    name varchar(50)
+-- 💫 Calculando el total de la compra #123
+SELECT calcular_total_compra(123) as total_kawaii;
+```
+
+---
+
+## 🏋️‍♀️ Ejercicios Prácticos
+
+### 🌍 Estructura Geográfica
+
+```sql
+-- Crear las tablas base
+CREATE TABLE paises (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo_iso CHAR(2) UNIQUE
 );
 
-CREATE TABLE region (
-    id serial,
-    name varchar(50),
-    idcountry integer
+CREATE TABLE regiones (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    id_pais INTEGER REFERENCES paises(id)
 );
 
-CREATE TABLE city (
-    id serial,
-    name varchar(50),
-    idregion integer
+CREATE TABLE ciudades (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    id_region INTEGER REFERENCES regiones(id)
 );
 ```
 
-## Funciones y Operadores  - SELECT 
-1. Top 10 productos màs vendidos (unidades) y su  ingreso total 
-    - `SUM()`
-    - `USING`
-    ```sql
-    SELECT p.id_producto, p.nombre,
-        SUM(cp.cantidad) AS unidades
-        SUM (cp.total) AS ingreso total
-    FROM miscompras.compras_productos cp 
-    JOIN miscompras.productos p  USING(id_producto)
-    GROUP BY p.id_producto, p.nombre
-    ORDER BY unidades DESC
-    LIMIT 10;
-    ```
-2. Venta promedio por compra y mediana aproximada
-    -`PERCENTILE_CONT(..) WITH GROUP (ORDER BY ..)`
-    -`ROUND`
-    -`USING`
+**🎯 Tu misión:** Agregar todas las constraints usando `ALTER TABLE`
 
-    ```sql
-    SELECT ROUND(AVG(t.total_compra), 2) AS promedio_compra,
-    PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY t.total_compra) AS mediana 
-    FROM (
-        SELECT c.id_compra, SUM(cp.total) as total_compra 
-        FROM miscompras.compras c 
-        JOIN miscompras.compras_productos cp USING(id_compra)
-        GROUP BY c.id_compra 
-        )t;
-    ```
+---
 
-3. compra por cliente y ranking
-    -`COUNT`
-    -`SUM`
-    -`RANK() OVER(ORDER BY... ASC/DESC) ASC/DESC`
+## 🎉 Tips Kawaii
 
-    ```sql
-    SELECT cl.id, cl.nombre || ' ' || cl.apellidos AS cliente,
-           COUNT(DISTINCT c.id_compra) AS compras,
-           SUM(cp.total) AS gasto_total,
-           RANK() OVER(ORDER BY SUM(cp.total) DESC) AS ranking_gasto
-    FROM miscompras.clientes cl
-    JOIN miscompras.compras c ON cl.id = c.id_cliente
-    JOIN miscompras.compras_productos cp USING(id_compra)
-    GROUP BY cl.id, cliente
-    ORDER BY ranking_gasto;
-    ```
-4. Ticket por compra
-    -`COUNT`
-    -`ROUND`
-    -`SUM`
-    -`WITH args AS`
-    ```sql
-    WITH t AS(
-        SELECT c.id_compra, c.fecha::date as dia, SUM(cp.total) as total_compra
-        FROM miscompras.compras c
-        JOIN miscompras.compras_productos cp USING(id_compra)
-        GROUP BY  c.id_compra, c.fecha::date)
-        SELECT dia,
-        COUNT(*) as numero_compras,
-        ROUND(AVG(total_compra), 2) as promedio,
-        SUM(total_compra) as total_dia
-        FROM t
-        GROUP BY dia
-        ORDER BY dia;
-    ```    
+> 💡 **Consejo #1:** Siempre usa nombres descriptivos para tus constraints
+> 
+> 💡 **Consejo #2:** Los comentarios en SQL también pueden ser kawaii
+> 
+> 💡 **Consejo #3:** Usa `COALESCE()` para manejar valores NULL de forma elegante
 
-5. Busqueda "tipo e-commerce": procuctos activos, disponibles y que  empiecen por 'caf'
-    -'ILIKE'
-    ```sql
-        SELECT p.id_producto, p.nombre, p.precio_venta, p.cantidad_stock
-        FROM miscompras.productos p 
-        WHERE p.estado = 1
-            AND p.cantidad_stock > 0 
-            AND p.nombre ILIKE 'caf%';
-    ```
+---
 
-23. Función:total d euna compra(retorna NUMERIC)
-    -`COALESCE`
-    -`SUM`
-    ```sql
-    CREATE OR REPLACE FUNCTION miscompras.fn_total_compra(p_id_compra INT)
-    RETURNS NUMERIC LANGUAGE plpgsql AS $$
-    DECLARE  v_total NUMERIC(16,2);
-    BEGIN
-        SELECT COALESCE(SUM(total), 0)
-        INTO v_total
-        FROM miscompras.compras_productos
-        WHERE id_compra = p_id_compra;
+## 📚 Recursos Adicionales
 
-        RETURN v_total;
-    END;
-    $$;
-    ```
+- 📖 [Documentación Oficial PostgreSQL](https://www.postgresql.org/docs/)
+- 🐳 [Docker Hub - PostgreSQL](https://hub.docker.com/_/postgres)
+- 💡 [Mejores Prácticas SQL](https://example.com)
 
+---
 
+<div align="center">
 
+### 🌸 ¡Gracias por usar esta guía! 🌸
 
+*Si te gustó, no olvides darle una ⭐ al repo*
+
+**Hecho con mucho 💕 y código kawaii**
+
+---
+
+*¿Encontraste algún error? ¡Abre un issue y lo arreglaremos juntos!* ✨
+
+</div>
